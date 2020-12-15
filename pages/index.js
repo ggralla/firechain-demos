@@ -1,7 +1,13 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
+import { w3, fireRead } from '../helpers/firechain.js'
+
 export default function Home() {
+  console.log("W3", w3)
+  if (process.browser) {
+      fireRead('nice')
+  console.log("Eth ", window.ethereum)}
   return (
     <div className={styles.container}>
       <Head>
@@ -11,7 +17,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to <a href="https://nextjs.org">FireChain.js!</a>
         </h1>
 
         <p className={styles.description}>
