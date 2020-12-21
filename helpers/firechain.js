@@ -14,8 +14,10 @@ if (!ethPrivKey) {
 // TODO what is wallet vs account?
 const account = w3.eth.accounts.privateKeyToAccount(ethPrivKey);
 
-const CONTRACT_ADDR = "0x6954fd4298F36FE38f254CF6789ebF755bb0035E";
+const CONTRACT_ADDR = w3.utils.toChecksumAddress("0x02dB0556424733e0a4a85970c9A104E20555415E");
 export const contract = new w3.eth.Contract(abi, CONTRACT_ADDR);
+console.log(account);
+contract.options.from = account.address;
 
 export function fireRead(key) {
     const convKey = w3.utils.asciiToHex(key).padEnd(66,"0") ;
@@ -25,12 +27,22 @@ export function fireRead(key) {
         .then((gasEstimate) => {
           contract.methods
             .read(account.address, convKey)
-            .send({ gas: gasEstimate })
+            .send({ gas: gasEstimate }).then((response) => {
+                console.log("read", response);
+            })
     })
     .catch(error=> console.log("READ ERROR", error))
     return ret;
 }
 
-export function fireWrite(key, value) {
-    contract.methods.write(account.address, key, value);
+export async function fireWrite(key, value) {
+    const convKey = w3.utils.asciiToHex(key).padEnd(66,"0") ;
+    const convValue = w3.utils.asciiToHex(value).padEnd(66,"0") ;
+    const ret = await contract.methods.write(account.address, convKey, {value: convValue}).send({gas:999999});
+    return ret;
+}
+
+export async function fireCreate() {
+    const ret = await contract.methods.createStore(account.address).send({gas:999999});
+    return ret;
 }

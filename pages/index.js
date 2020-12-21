@@ -1,13 +1,14 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
-import { w3, fireRead } from '../helpers/firechain.js'
+import { w3, fireRead, fireWrite, fireCreate } from '../helpers/firechain.js'
 
 export default function Home() {
-  console.log("W3", w3)
   if (process.browser) {
-      fireRead('nice')
-  console.log("Eth ", window.ethereum)}
+      fireCreate().then((wut) => console.log("create", wut));
+      fireWrite('nice','coolstring').then((wut) => console.log("write", wut));
+      fireRead('nice');
+  } 
   return (
     <div className={styles.container}>
       <Head>

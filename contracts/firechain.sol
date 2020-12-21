@@ -18,7 +18,7 @@ contract FireChainStore {
     mapping (address => Store) userStores;
     address[] users;
     
-    
+    // todo: check sender address against _owner key for permissions
     function write (address _owner, bytes32 _key, ValueType _value) public {
         Store userStore = userStores[_owner];
         
