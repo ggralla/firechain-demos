@@ -25,20 +25,12 @@ export const contract = new w3.eth.Contract(abi, CONTRACT_ADDR);
 console.log(account);
 contract.options.from = account.address;
 
-export function fireRead(key) {
+export async function fireRead(key) {
     const convKey = w3.utils.utf8ToHex(key).padEnd(66,"0") ;
-    const ret = contract.methods
-        .read(account.address, convKey)
-        .estimateGas()
-        .then((gasEstimate) => {
-          contract.methods
-            .read(NAMESPACE, convKey)
-            .call().then((response) => {
-                console.log("read", w3.utils.toUtf8(response[0]));
-            })
-    })
-    .catch(error=> console.log("READ ERROR", error))
-    return ret;
+    const ret = await contract.methods.read(NAMESPACE, convKey).call()
+    const str = w3.utils.toUtf8(ret[0]);
+    console.log("read", str)
+    return str
 }
 
 export async function fireWrite(key, value) {
