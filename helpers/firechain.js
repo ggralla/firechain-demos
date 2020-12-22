@@ -27,7 +27,7 @@ export function fireRead(key) {
         .then((gasEstimate) => {
           contract.methods
             .read(account.address, convKey)
-            .send({ gas: gasEstimate }).then((response) => {
+            .call().then((response) => {
                 console.log("read", response);
             })
     })
@@ -38,11 +38,14 @@ export function fireRead(key) {
 export async function fireWrite(key, value) {
     const convKey = w3.utils.asciiToHex(key).padEnd(66,"0") ;
     const convValue = w3.utils.asciiToHex(value).padEnd(66,"0") ;
-    const ret = await contract.methods.write(account.address, convKey, {value: convValue}).send({gas:999999});
+    //const nonce = await w3.eth.getTransactionCount(account.address, 'pending')
+    const ret = await contract.methods.write(account.address, convKey, {value: convValue}).send({gas:99999});
+    console.log(ret)
     return ret;
 }
 
 export async function fireCreate() {
     const ret = await contract.methods.createStore(account.address).send({gas:999999});
+    console.log(ret)
     return ret;
 }

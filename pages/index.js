@@ -4,11 +4,6 @@ import styles from '../styles/Home.module.css'
 import { w3, fireRead, fireWrite, fireCreate } from '../helpers/firechain.js'
 
 export default function Home() {
-  if (process.browser) {
-      fireCreate().then((wut) => console.log("create", wut));
-      fireWrite('nice','coolstring').then((wut) => console.log("write", wut));
-      fireRead('nice');
-  } 
   return (
     <div className={styles.container}>
       <Head>
@@ -20,6 +15,9 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">FireChain.js!</a>
         </h1>
+      <button onClick={()=>fireRead('nice')}>Read</button>
+      <button onClick={()=>fireWrite('nice','coolstring')}>Write</button>
+      <button onClick={fireCreate}>Create</button>
 
         <p className={styles.description}>
           Get started by editing{' '}
