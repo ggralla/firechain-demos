@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import { fireWrite} from '../helpers/firechain.js'
+import { fireWrite} from 'firechain';
 
 const Writer = (props) => {
     const [key, setKey] = useState('testKey')

@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import { w3, fireRead, fireWrite, fireCreate } from '../helpers/firechain.js'
+import { w3, fireRead, fireWrite, fireCreate } from 'firechain';
 
 const Reader = (props) => {
   const [key, setKey] = useState('testKey')
